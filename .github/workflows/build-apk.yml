@@ -36,16 +36,34 @@ jobs:
           gradle-version: '8.10.2'
 
       - name: Build debug APK
-        run: gradle :app:assembleDebug --stacktrace --no-daemon
-
-      - name: Prepare APK artifact
+        id: build_apk
+        continue-on-error: true
         run: |
           mkdir -p output
+          gradle :app:assembleDebug --stacktrace --no-daemon 2>&1 | tee output/build-log.txt
+          test ${PIPESTATUS[0]} -eq 0
+
+      - name: Prepare APK artifact
+        if: steps.build_apk.outcome == 'success'
+        run: |
           cp app/build/outputs/apk/debug/app-debug.apk output/GhiChuMinh-reminder-debug.apk
 
       - name: Upload APK artifact
+        if: steps.build_apk.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: GhiChuMinh-reminder-debug-apk
           path: output/GhiChuMinh-reminder-debug.apk
           if-no-files-found: error
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GhiChuMinh-build-log
+          path: output/build-log.txt
+          if-no-files-found: ignore
+
+      - name: Fail if APK build failed
+        if: steps.build_apk.outcome != 'success'
+        run: exit 1
