@@ -1,15 +1,15 @@
-name: Build APK
+name: Build Ghi Chu Minh v2 APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, feature/ghi-chu-minh-v2 ]
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build debug APK
+    name: Build Android debug APK
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +35,7 @@ jobs:
         with:
           gradle-version: '8.10.2'
 
-      - name: Build debug APK
+      - name: Build APK
         id: build_apk
         continue-on-error: true
         run: |
@@ -46,23 +46,28 @@ jobs:
       - name: Prepare APK artifact
         if: steps.build_apk.outcome == 'success'
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk output/GhiChuMinh-reminder-debug.apk
+          cp app/build/outputs/apk/debug/app-debug.apk output/GhiChuMinh-v2.0-debug.apk
+          sha256sum output/GhiChuMinh-v2.0-debug.apk > output/GhiChuMinh-v2.0-debug.sha256
 
       - name: Upload APK artifact
         if: steps.build_apk.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: GhiChuMinh-reminder-debug-apk
-          path: output/GhiChuMinh-reminder-debug.apk
+          name: GhiChuMinh-v2.0-apk
+          path: |
+            output/GhiChuMinh-v2.0-debug.apk
+            output/GhiChuMinh-v2.0-debug.sha256
           if-no-files-found: error
+          retention-days: 30
 
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: GhiChuMinh-build-log
+          name: GhiChuMinh-v2.0-build-log
           path: output/build-log.txt
           if-no-files-found: ignore
+          retention-days: 30
 
       - name: Fail if APK build failed
         if: steps.build_apk.outcome != 'success'
