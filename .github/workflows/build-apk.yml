@@ -26,6 +26,9 @@ jobs:
           unzip -q GhiChuMinhV2-source.zip -d project
           base64 -d v21.patch.gz.b64.verified | gzip -d > v21.patch
           patch -p1 -d project < v21.patch
+          if ! grep -q "buildConfig true" project/app/build.gradle; then
+            sed -i '/^android {/a\    buildFeatures { buildConfig true }' project/app/build.gradle
+          fi
           (cd project && zip -qr ../output/GhiChuMinh-v2.1.0-source.zip .)
           sha256sum output/GhiChuMinh-v2.1.0-source.zip > output/SOURCE-SHA256.txt
 
