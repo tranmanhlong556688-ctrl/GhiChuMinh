@@ -1,30 +1,26 @@
-# Ghi Chú Minh
+# Ghi Chú Minh v2.0
 
-Ứng dụng Android ghi chú và nhắc việc hằng ngày cho điện thoại Xiaomi Redmi 10.
+Ứng dụng Android ghi chú, nhắc việc và quản lý công việc cá nhân bằng tiếng Việt, tối ưu cho Xiaomi Redmi 10 và hoạt động ngoại tuyến.
 
-## Chức năng
+## Chức năng chính
 
-- Thêm công việc / ghi chú mới.
-- Nhập nội dung chi tiết cho từng việc.
-- Chọn ngày giờ nhắc việc.
-- Nhận thông báo nhắc việc trên điện thoại.
-- Tùy chọn nhắc lại hằng ngày.
-- Bấm vào công việc để đánh dấu hoàn thành hoặc mở lại.
-- Nhấn giữ công việc để sửa hoặc xóa.
-- Tự đặt lại nhắc việc sau khi khởi động lại điện thoại.
-- Lưu dữ liệu cục bộ trên máy, không cần tài khoản đăng nhập.
+1. Thư mục, nhãn, màu sắc, mức ưu tiên, ghim và lưu trữ ghi chú.
+2. Tìm kiếm toàn văn và bộ lọc Hôm nay, Quá hạn, Sắp đến hạn, Hoàn thành.
+3. Checklist và công việc con, có hiển thị tiến độ.
+4. Nhắc việc nâng cao, chu kỳ lặp và báo lại sau 10 phút.
+5. Trang Hôm nay và lọc công việc theo ngày.
+6. Mẫu ghi chú và trình soạn thảo hỗ trợ ký hiệu định dạng nhanh.
+7. Đính kèm ảnh hoặc tài liệu bằng bộ chọn tệp Android.
+8. Widget, tạo nhanh, nhận nội dung chia sẻ và lấy nội dung clipboard.
+9. Thùng rác 30 ngày, sao lưu/khôi phục JSON và xuất TXT.
+10. Khóa ứng dụng bằng PIN, ghi chú bí mật và ẩn nội dung thông báo.
 
-## Build APK online bằng GitHub Actions
+Ứng dụng dùng logo ML hình rồng làm icon và có mục **Đóng góp ý kiến / Gửi phản hồi**.
 
-1. Vào tab **Actions** trong repo này.
-2. Chọn workflow **Build APK**.
-3. Bấm **Run workflow** nếu muốn build thủ công, hoặc chỉ cần push code lên nhánh `main`.
-4. Khi workflow chạy xong, mở lần chạy mới nhất.
-5. Tải artifact **GhiChuMinh-reminder-debug-apk**.
-6. Giải nén artifact và cài file **GhiChuMinh-reminder-debug.apk** trên điện thoại.
+## Build APK
 
-## Lưu ý khi cài trên Xiaomi Redmi 10
+GitHub Actions tự động ghép các tệp `source.part*`, xác minh SHA-256 của mã nguồn, build bằng Android SDK 35 và Gradle 8.10.2. Artifact đầu ra: `GhiChuMinh-v2.0.0-apk`.
 
-- Cho phép cài ứng dụng từ nguồn không xác định nếu điện thoại hỏi.
-- Khi mở app lần đầu, hãy cho phép quyền thông báo.
-- Với máy Xiaomi/MIUI, nên cho app quyền tự khởi động và không hạn chế pin để nhắc việc ổn định hơn.
+Mã nguồn gốc được đóng gói trong `GhiChuMinhV2-source.zip`, SHA-256:
+
+`c84dc612e571e1d3ff6659c7de8b4f6d230dcf79dd29342ee0e865165c5bc1eb`

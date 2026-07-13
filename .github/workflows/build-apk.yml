@@ -1,20 +1,27 @@
-name: Build APK
+name: Build Ghi Chu Minh v2 APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, app-v2-upgrade ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build debug APK
+    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
+      - name: Checkout source package
         uses: actions/checkout@v4
+
+      - name: Rebuild and verify source ZIP
+        run: |
+          cat source.part00 source.part01 source.part02 source.part03 source.part04 source.part05 source.part06a source.part06b0 source.part06b1 source.part06b2 source.part06b3 source.part07 | base64 -d > GhiChuMinhV2-source.zip
+          echo "c84dc612e571e1d3ff6659c7de8b4f6d230dcf79dd29342ee0e865165c5bc1eb  GhiChuMinhV2-source.zip" | sha256sum -c -
+          mkdir -p project output
+          unzip -q GhiChuMinhV2-source.zip -d project
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -22,13 +29,15 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: gradle
+          cache-dependency-path: |
+            project/*.gradle
+            project/app/*.gradle
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Install Android SDK packages
-        run: |
-          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Set up Gradle 8.10.2
         uses: gradle/actions/setup-gradle@v4
@@ -38,31 +47,36 @@ jobs:
       - name: Build debug APK
         id: build_apk
         continue-on-error: true
+        working-directory: project
         run: |
-          mkdir -p output
-          gradle :app:assembleDebug --stacktrace --no-daemon 2>&1 | tee output/build-log.txt
-          test ${PIPESTATUS[0]} -eq 0
+          set -o pipefail
+          gradle :app:assembleDebug --stacktrace --no-daemon 2>&1 | tee ../output/build-log.txt
 
-      - name: Prepare APK artifact
+      - name: Prepare APK
         if: steps.build_apk.outcome == 'success'
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk output/GhiChuMinh-reminder-debug.apk
+          cp project/app/build/outputs/apk/debug/app-debug.apk output/GhiChuMinh-v2.0.0.apk
+          sha256sum output/GhiChuMinh-v2.0.0.apk > output/SHA256.txt
 
-      - name: Upload APK artifact
+      - name: Upload APK
         if: steps.build_apk.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: GhiChuMinh-reminder-debug-apk
-          path: output/GhiChuMinh-reminder-debug.apk
+          name: GhiChuMinh-v2.0.0-apk
+          path: |
+            output/GhiChuMinh-v2.0.0.apk
+            output/SHA256.txt
           if-no-files-found: error
+          retention-days: 30
 
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: GhiChuMinh-build-log
+          name: GhiChuMinh-v2-build-log
           path: output/build-log.txt
-          if-no-files-found: ignore
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Fail if APK build failed
         if: steps.build_apk.outcome != 'success'
