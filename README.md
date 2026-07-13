@@ -1,55 +1,26 @@
 # Ghi Chú Minh v2.0
 
-Ứng dụng Android ghi chú và nhắc việc cá nhân, tối ưu cho công việc văn phòng và nhà máy trên Xiaomi Redmi 10.
+Ứng dụng Android ghi chú, nhắc việc và quản lý công việc cá nhân bằng tiếng Việt, tối ưu cho Xiaomi Redmi 10 và hoạt động ngoại tuyến.
 
-## Ba nhóm nâng cấp chính
+## Chức năng chính
 
-### 1. Phân loại và ưu tiên
-- Nhóm: Nhà máy, Văn phòng, Cá nhân, Khẩn cấp, Ý tưởng.
-- Mức ưu tiên: Thấp, Bình thường, Cao, Khẩn cấp.
-- Ghim công việc quan trọng lên đầu danh sách.
-- Màu thẻ thay đổi theo mức ưu tiên.
+1. Thư mục, nhãn, màu sắc, mức ưu tiên, ghim và lưu trữ ghi chú.
+2. Tìm kiếm toàn văn và bộ lọc Hôm nay, Quá hạn, Sắp đến hạn, Hoàn thành.
+3. Checklist và công việc con, có hiển thị tiến độ.
+4. Nhắc việc nâng cao, chu kỳ lặp và báo lại sau 10 phút.
+5. Trang Hôm nay và lọc công việc theo ngày.
+6. Mẫu ghi chú và trình soạn thảo hỗ trợ ký hiệu định dạng nhanh.
+7. Đính kèm ảnh hoặc tài liệu bằng bộ chọn tệp Android.
+8. Widget, tạo nhanh, nhận nội dung chia sẻ và lấy nội dung clipboard.
+9. Thùng rác 30 ngày, sao lưu/khôi phục JSON và xuất TXT.
+10. Khóa ứng dụng bằng PIN, ghi chú bí mật và ẩn nội dung thông báo.
 
-### 2. Tìm kiếm và bộ lọc
-- Tìm theo tên, nội dung, nhóm và mức ưu tiên.
-- Bộ lọc: Tất cả, Hôm nay, Quá hạn, Sắp tới, Đã hoàn thành.
-- Hiển thị tổng số việc còn lại và số việc quá hạn.
+Ứng dụng dùng logo ML hình rồng làm icon và có mục **Đóng góp ý kiến / Gửi phản hồi**.
 
-### 3. Nhắc việc nâng cao
-- Nhắc một lần.
-- Lặp hằng ngày.
-- Lặp từ thứ Hai đến thứ Sáu.
-- Lặp hằng tuần.
-- Lặp hằng tháng.
-- Khôi phục lịch nhắc sau khi khởi động lại điện thoại.
+## Build APK
 
-## Chức năng bổ sung
-- Giữ và tự chuyển đổi dữ liệu từ bản 1.x.
-- Nhận văn bản được chia sẻ từ ứng dụng khác.
-- Logo ML hình rồng làm icon và nhận diện trong ứng dụng.
-- Mục Đóng góp ý kiến/Báo lỗi gửi về lienhe@mltudonghoa.pro.vn.
-- Không yêu cầu đăng nhập, không quảng cáo và lưu dữ liệu cục bộ.
+GitHub Actions tự động ghép các tệp `source.part*`, xác minh SHA-256 của mã nguồn, build bằng Android SDK 35 và Gradle 8.10.2. Artifact đầu ra: `GhiChuMinh-v2.0.0-apk`.
 
-## Build APK bằng GitHub Actions
+Mã nguồn gốc được đóng gói trong `GhiChuMinhV2-source.zip`, SHA-256:
 
-1. Mở tab **Actions** của repository.
-2. Chọn workflow **Build Ghi Chu Minh v2 APK**.
-3. Mở lần chạy mới nhất đã thành công.
-4. Tải artifact **GhiChuMinh-v2.0-apk**.
-5. Giải nén và cài file **GhiChuMinh-v2.0-debug.apk**.
-
-## Thiết lập trên Xiaomi/MIUI
-
-- Cho phép cài ứng dụng từ nguồn không xác định.
-- Cho phép quyền thông báo khi mở app lần đầu.
-- Bật **Tự khởi động** cho Ghi Chú Minh.
-- Đặt chế độ pin thành **Không hạn chế**.
-- Cho phép **Báo thức và lời nhắc** nếu điện thoại yêu cầu.
-
-## Phiên bản kỹ thuật
-
-- Application ID: `com.minh.ghichuminh`
-- Version code: `3`
-- Version name: `2.0.0`
-- Min SDK: Android 6.0 (API 23)
-- Target SDK: Android 15 (API 35)
+`c84dc612e571e1d3ff6659c7de8b4f6d230dcf79dd29342ee0e865165c5bc1eb`
