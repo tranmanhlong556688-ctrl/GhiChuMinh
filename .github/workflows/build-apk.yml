@@ -20,9 +20,11 @@ jobs:
         run: |
           cat source.part00 source.part01 source.part02 source.part03 source.part04 source.part05 source.part06a source.part06b0 source.part06b1 source.part06b2 source.part06b3 source.part07 | base64 -d > GhiChuMinhV2-source.zip
           echo "c84dc612e571e1d3ff6659c7de8b4f6d230dcf79dd29342ee0e865165c5bc1eb  GhiChuMinhV2-source.zip" | sha256sum -c -
+          cat v21patch.part00 v21patch.part01 v21patch.part02 v21patch.part03 v21patch.part04 v21patch.part05 > v21.patch.gz.b64.verified
+          echo "f7aa4fc868a50df772f4406e694144bf42ecca3dde95ac3c27f41ff3c45b6735  v21.patch.gz.b64.verified" | sha256sum -c -
           mkdir -p project output
           unzip -q GhiChuMinhV2-source.zip -d project
-          base64 -d v21.patch.gz.b64 | gzip -d > v21.patch
+          base64 -d v21.patch.gz.b64.verified | gzip -d > v21.patch
           patch -p1 -d project < v21.patch
           (cd project && zip -qr ../output/GhiChuMinh-v2.1.0-source.zip .)
           sha256sum output/GhiChuMinh-v2.1.0-source.zip > output/SOURCE-SHA256.txt
