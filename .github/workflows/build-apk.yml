@@ -3,6 +3,8 @@ name: Build Ghi Chu Minh v2 Full APK
 on:
   push:
     branches: [ main, app-v2-final ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
