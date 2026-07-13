@@ -1,0 +1,1 @@
+Trigger full Ghi Chú Minh v2.0 APK build after BuildConfig fix.
